@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>fastai dataloader | Bowenroom</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="fastai dataloader" />
+<meta name="author" content="Bowen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="learn DL easily" />
+<meta property="og:description" content="learn DL easily" />
+<link rel="canonical" href="https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html" />
+<meta property="og:url" content="https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html" />
+<meta property="og:site_name" content="Bowenroom" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-27T00:00:00-06:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Bowen"},"description":"learn DL easily","@type":"BlogPosting","headline":"fastai dataloader","dateModified":"2021-01-27T00:00:00-06:00","datePublished":"2021-01-27T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/myBlog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bowenroom.github.io/myBlog/feed.xml" title="Bowenroom" /><link rel="shortcut icon" type="image/x-icon" href="/myBlog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>fastai dataloader | Bowenroom</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="fastai dataloader" />
+<meta name="author" content="Bowen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="learn DL easily" />
+<meta property="og:description" content="learn DL easily" />
+<link rel="canonical" href="https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html" />
+<meta property="og:url" content="https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html" />
+<meta property="og:site_name" content="Bowenroom" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-27T00:00:00-06:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Bowen"},"description":"learn DL easily","@type":"BlogPosting","headline":"fastai dataloader","dateModified":"2021-01-27T00:00:00-06:00","datePublished":"2021-01-27T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://bowenroom.github.io/myBlog/feed.xml" title="Bowenroom" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/myBlog/">Bowenroom</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/myBlog/about/">About Me</a><a class="page-link" href="/myBlog/search/">Search</a><a class="page-link" href="/myBlog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">fastai dataloader</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-27T00:00:00-06:00" itemprop="datePublished">
+        Jan 27, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Bowen</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/myBlog/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/myBlog/categories/#fastai">fastai</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/bowenroom/myBlog/tree/master/_notebooks/2021-01-27-fastai-dataloader.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/myBlog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/bowenroom/myBlog/master?filepath=_notebooks%2F2021-01-27-fastai-dataloader.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/myBlog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/bowenroom/myBlog/blob/master/_notebooks/2021-01-27-fastai-dataloader.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/myBlog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#DataLoader-helpers">DataLoader helpers </a></li>
+<li class="toc-entry toc-h2"><a href="#assemble-data-into-dataset-with-pytorch">assemble data into dataset with pytorch </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-01-27-fastai-dataloader.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.torch_basics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">_MultiProcessingDataLoaderIter</span><span class="p">,</span><span class="n">_SingleProcessDataLoaderIter</span><span class="p">,</span><span class="n">_DatasetKind</span>
+<span class="n">_loaders</span> <span class="o">=</span> <span class="p">(</span><span class="n">_MultiProcessingDataLoaderIter</span><span class="p">,</span><span class="n">_SingleProcessDataLoaderIter</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># from nbdev.showdoc import *</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">letters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DataLoader-helpers">
+<a class="anchor" href="#DataLoader-helpers" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataLoader helpers<a class="anchor-link" href="#DataLoader-helpers"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>fastai includes a replacement for Pytorch's <em>DataLoader</em> which is largely API-compatible, and adds a lot of useful functionality and flexibility. Before we look at the class, there are a couple of helpers we'll need to define.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">_wif</span><span class="p">(</span><span class="n">worker_id</span><span class="p">):</span>
+    <span class="n">set_num_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">get_worker_info</span><span class="p">()</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">d</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span><span class="n">ds</span><span class="o">.</span><span class="n">offs</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">id</span>
+    <span class="n">set_seed</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">wif</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">_FakeLoader</span><span class="p">:</span>
+    <span class="n">_IterableDataset_len_called</span><span class="p">,</span><span class="n">_auto_collation</span><span class="p">,</span><span class="n">collate_fn</span><span class="p">,</span><span class="n">drop_last</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="n">noops</span><span class="p">,</span><span class="kc">False</span>
+    <span class="n">_index_sampler</span><span class="p">,</span><span class="n">generator</span><span class="p">,</span><span class="n">prefetch_factor</span>  <span class="o">=</span> <span class="n">Inf</span><span class="o">.</span><span class="n">count</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">2</span>
+    <span class="n">dataset_kind</span> <span class="o">=</span> <span class="n">_dataset_kind</span> <span class="o">=</span> <span class="n">_DatasetKind</span><span class="o">.</span><span class="n">Iterable</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">pin_memory</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">persistent_workers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">worker_init_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">_wif</span>
+        <span class="n">store_attr</span><span class="p">(</span><span class="s1">'d,pin_memory,num_workers,timeout,persistent_workers'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">create_batches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">()))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">multiprocessing_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="n">multiprocessing</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">no_multiproc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">old_num_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span>
+        <span class="k">finally</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">old_num_workers</span>
+
+<span class="n">_collate_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="s2">"A replacement for PyTorch `default_collate` which maintains types and handles `Sequence`s"</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">default_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">_collate_types</span><span class="p">)</span>
+            <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])([</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">default_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#e.g. x is int, y is tuple</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),(</span><span class="mi">1</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))]</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">default_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="p">[</span><span class="n">Tensor</span><span class="p">,</span><span class="nb">tuple</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span>
+<span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(1, (2, 3)), (1, (2, 3))]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([1, 1]), (tensor([2, 2]), tensor([3, 3])))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,(</span><span class="mi">2</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))),(</span><span class="mi">1</span><span class="p">,(</span><span class="mi">2</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))]</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">default_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="p">[</span><span class="n">Tensor</span><span class="p">,</span><span class="nb">tuple</span><span class="p">])</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="p">[</span><span class="n">Tensor</span><span class="p">,</span><span class="nb">tuple</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span>
+<span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(1, (2, 3)), (1, (2, 3))]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([1, 1]), (tensor([2, 2]), tensor([3, 3])))</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([2, 2]), tensor([3, 3]))</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="assemble-data-into-dataset-with-pytorch">
+<a class="anchor" href="#assemble-data-into-dataset-with-pytorch" aria-hidden="true"><span class="octicon octicon-link"></span></a>assemble data into dataset with pytorch<a class="anchor-link" href="#assemble-data-into-dataset-with-pytorch"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://zhuanlan.zhihu.com/p/30385675">https://zhuanlan.zhihu.com/p/30385675</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>default_collate<span class="o">??</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span>
+<span class="n">fa_collate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(1, (2, (3, 4))), (1, (2, (3, 4)))]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([1, 1]), (tensor([2, 2]), (tensor([3, 3]), tensor([4, 4]))))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fa_convert</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="s2">"A replacement for PyTorch `default_convert` which maintains types and handles `Sequence`s"</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">default_convert</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">_collate_types</span><span class="p">)</span>
+            <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">)([</span><span class="n">fa_convert</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">t</span><span class="p">])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">default_convert</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t0</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">t0</span><span class="p">,(</span><span class="n">t0</span><span class="p">,</span><span class="n">t0</span><span class="p">)]</span>
+
+<span class="n">test_eq</span><span class="p">(</span><span class="n">fa_convert</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">default_convert</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">fa_convert</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="p">[</span><span class="n">Tensor</span><span class="p">,</span><span class="nb">tuple</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span>
+<span class="n">fa_convert</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[array([1, 2]), (array([1, 2]), array([1, 2]))]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([1, 2]), (tensor([1, 2]), tensor([1, 2]))]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SkipItemException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="s2">"Raised to notify `DataLoader` to skip an item"</span>
+    <span class="k">pass</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@funcs_kwargs</span>
+<span class="k">class</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">GetAttr</span><span class="p">):</span>
+    <span class="n">_noop_methods</span> <span class="o">=</span> <span class="s1">'wif before_iter after_item before_batch after_batch after_iter'</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">_noop_methods</span><span class="p">:</span> <span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"def </span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s2">(self, x=None, *args, **kwargs): return x"</span><span class="p">)</span>
+    <span class="n">_methods</span> <span class="o">=</span> <span class="n">_noop_methods</span> <span class="o">+</span> <span class="s1">'create_batches create_item create_batch retain </span><span class="se">\</span>
+<span class="s1">        get_idxs sample shuffle_fn do_batch create_batch'</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">_default</span> <span class="o">=</span> <span class="s1">'dataset'</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indexed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">persistent_workers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">bs</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="c1"># PyTorch compatibility</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">bs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">drop_last</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">indexed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">indexed</span> <span class="o">=</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span><span class="s1">'__getitem__'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span> <span class="k">pass</span>
+        <span class="n">store_attr</span><span class="p">(</span><span class="s1">'dataset,bs,shuffle,drop_last,indexed,n,pin_memory,timeout,device'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">offs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fake_l</span> <span class="o">=</span> <span class="n">_FakeLoader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_memory</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">persistent_workers</span><span class="o">=</span><span class="n">persistent_workers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">TypeError</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">//</span><span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">%</span><span class="k">self</span>.bs==0 else 1)
+
+    <span class="k">def</span> <span class="nf">get_idxs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">Inf</span><span class="o">.</span><span class="n">count</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexed</span> <span class="k">else</span> <span class="n">Inf</span><span class="o">.</span><span class="n">nones</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">idxs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">:</span> <span class="n">idxs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_fn</span><span class="p">(</span><span class="n">idxs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">idxs</span>
+    
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="k">return</span> <span class="p">(</span><span class="n">b</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__idxs</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">//</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">self</span>.num_workers==self.offs)
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randomize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">before_iter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__idxs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_idxs</span><span class="p">()</span> <span class="c1"># called in context of main process (not workers/subprocesses)</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">_loaders</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">num_workers</span><span class="o">==</span><span class="mi">0</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">fake_l</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">to_device</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">after_batch</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">after_iter</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'it'</span><span class="p">):</span> <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">it</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">create_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samps</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span><span class="n">o</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_item</span><span class="p">,</span> <span class="n">samps</span><span class="p">))</span>
+        <span class="k">yield from</span> <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_batch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunkify</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">cur_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                          <span class="n">bs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span><span class="p">,</span> <span class="n">indexed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">indexed</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_methods</span><span class="p">:</span>
+            <span class="n">o</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">MethodType</span><span class="p">):</span> <span class="n">cur_kwargs</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">merge</span><span class="p">(</span><span class="n">cur_kwargs</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prebatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="nf">do_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">after_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_item</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">SkipItemException</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="nf">chunkify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="n">b</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prebatched</span> <span class="k">else</span> <span class="n">chunked</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">shuffle_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idxs</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">idxs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">randomize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">retain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>  <span class="k">return</span> <span class="n">retain_types</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">is_listy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">else</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">create_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>  <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">it</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">create_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="n">fa_collate</span><span class="p">,</span><span class="n">fa_convert</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">prebatched</span><span class="p">](</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">do_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">retain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_batch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">before_batch</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+    <span class="k">def</span> <span class="nf">one_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'This DataLoader does not contain any batches'</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">no_multiproc</span><span class="p">():</span> <span class="n">res</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'it'</span><span class="p">):</span> <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'it'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Arguments to <code>DataLoader</code>:</p>
+<ul>
+<li>
+<code>dataset</code>: dataset from which to load the data. Can be either map-style or iterable-style dataset.</li>
+<li>
+<code>bs</code> (int): how many samples per batch to load (if <code>batch_size</code> is provided then <code>batch_size</code> will override <code>bs</code>). If <code>bs=None</code>, then it is assumed that <code>dataset.__getitem__</code> returns a batch.</li>
+<li>
+<code>num_workers</code> (int): how many subprocesses to use for data loading. <code>0</code> means that the data will be loaded in the main process.</li>
+<li>
+<code>pin_memory</code> (bool): If <code>True</code>, the data loader will copy Tensors into CUDA pinned memory before returning them.</li>
+<li>
+<code>timeout</code> (float&gt;0): the timeout value in seconds for collecting a batch from workers.</li>
+<li>
+<code>batch_size</code> (int): It is only provided for PyTorch compatibility. Use <code>bs</code>.</li>
+<li>
+<code>shuffle</code> (bool): If <code>True</code>, then data is shuffled every time dataloader is fully read/iterated.</li>
+<li>
+<code>drop_last</code> (bool): If <code>True</code>, then the last incomplete batch is dropped.</li>
+<li>
+<code>indexed</code> (bool): Set to <code>False</code>, if you are using iterable-style dataset. Otherwise it is set to <code>True</code> by default.</li>
+<li>
+<code>n</code> (int): Defaults to <code>len(dataset)</code>. If you are using iterable-style dataset, you can specify the size of batch using <code>n</code>.</li>
+<li>
+<code>device</code> (torch.device): Defaults to <code>default_device()</code> which is CUDA by default. You can specify device as `torch.device('cpu').</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Override <code>item</code> and use the default infinite sampler to get a stream of unknown length (<code>stop()</code> when you want to stop the stream).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">RandDL</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+    <span class="c1"># just think that create item defines how many batches you want to create</span>
+    <span class="k">def</span> <span class="nf">create_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">r</span> <span class="k">if</span> <span class="n">r</span><span class="o">&lt;</span><span class="mf">0.95</span> <span class="k">else</span> <span class="n">stop</span><span class="p">()</span>
+
+<span class="n">L</span><span class="p">(</span><span class="n">RandDL</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#2) [0.7845764769109268,0.07663069024469027]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span><span class="p">(</span><span class="n">RandDL</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#5) [tensor([0.4496, 0.1020, 0.7749, 0.2346], dtype=torch.float64),tensor([0.3137, 0.0669, 0.2633, 0.6447], dtype=torch.float64),tensor([0.1578, 0.7143, 0.7018, 0.3614], dtype=torch.float64),tensor([0.0818, 0.8804, 0.0260, 0.1141], dtype=torch.float64),tensor([0.8457, 0.4684, 0.6813, 0.5376], dtype=torch.float64)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aa</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">aa</span>
+<span class="c1"># map(len) 得到每一个个体的len信息</span>
+<span class="n">aa</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#2) [tensor([[[-0.1817,  0.8239],
+         [-1.2745,  0.2690]],
+
+        [[-2.4169, -0.0737],
+         [-0.5183, -0.2426]],
+
+        [[-0.5382, -0.8570],
+         [-0.3183, -1.3729]]]),tensor([[ 0.3762, -0.1435]])]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#2) [3,1]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># generate n samples, and each len of the sample is 4</span>
+<span class="n">L</span><span class="p">(</span><span class="n">RandDL</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#19) [4,4,4,4,4,4,4,4,4,4...]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dl</span> <span class="o">=</span> <span class="n">RandDL</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dl</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+<span class="n">aa</span>
+<span class="n">aa</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;__main__.RandDL at 0x7ff490c795e0&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#6) [tensor([7.9808e-01, 3.3119e-04, 6.3444e-01, 4.4250e-01], dtype=torch.float64),tensor([0.3784, 0.7446, 0.4139, 0.4271], dtype=torch.float64),tensor([0.0310, 0.9253, 0.8902, 0.7117], dtype=torch.float64),tensor([0.6363, 0.0280, 0.4431, 0.4497], dtype=torch.float64),tensor([0.2198, 0.9301, 0.2775, 0.5392], dtype=torch.float64),tensor([0.9400, 0.6906, 0.3483, 0.1497], dtype=torch.float64)]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#6) [4,4,4,4,4,4]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_eq</span><span class="p">(</span><span class="n">dl</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dl</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">no_multiproc</span><span class="p">():</span> 
+    <span class="n">test_eq</span><span class="p">(</span><span class="n">dl</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">L</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">dl</span><span class="o">.</span><span class="n">fake_l</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [4,4,4]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">_rand_item</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">r</span> <span class="k">if</span> <span class="n">r</span><span class="o">&lt;</span><span class="mf">0.95</span> <span class="k">else</span> <span class="n">stop</span><span class="p">()</span>
+
+<span class="n">L</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">create_item</span><span class="o">=</span><span class="n">_rand_item</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#19) [0.6349563676454735,0.7146332101602991,0.8141618453401647,0.4520649933251427,0.9361665561726571,0.6025762046797407,0.8542014056058742,0.1619398819056156,0.3453745719035911,0.21838379481215286...]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you don't set <code>bs</code>, then <code>dataset</code> is assumed to provide an iterator or a <code>__getitem__</code> that returns a batch.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="n">letters</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="mi">26</span><span class="p">)</span>
+
+<span class="n">test_shuffled</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span> <span class="n">letters</span><span class="p">)</span>
+
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">indexed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="n">letters</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="mi">26</span><span class="p">)</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span>
+<span class="n">ds2</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+<span class="n">test_eq_type</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds2</span><span class="p">),</span> <span class="n">t2</span><span class="p">)</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span>
+<span class="n">ds3</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">t3</span><span class="p">)</span>
+<span class="n">test_eq_type</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds3</span><span class="p">),</span> <span class="n">t3</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tensor</span><span class="p">))</span>
+
+<span class="n">ds4</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">create_batch</span><span class="o">=</span><span class="n">noop</span><span class="p">,</span> <span class="n">after_iter</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">test_eq_type</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds4</span><span class="p">),</span> <span class="n">t3</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">t3</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you do set <code>bs</code>, then <code>dataset</code> is assumed to provide an iterator or a <code>__getitem__</code> that returns a single item of a batch.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">twoepochs</span><span class="p">(</span><span class="n">d</span><span class="p">):</span> <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">o</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">twoepochs</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="s1">'abcd efgh ijkl mnop qrst uvwx abcd efgh ijkl mnop qrst uvwx'</span><span class="p">)</span>
+
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">twoepochs</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="s1">'abcd efgh ijkl mnop qrst uvwx yz abcd efgh ijkl mnop qrst uvwx yz'</span><span class="p">)</span>
+
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">test_eq_type</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="n">L</span><span class="p">(</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]),</span><span class="n">tensor</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">])))</span>
+
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)],</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">after_iter</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">test_eq_type</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">),</span> <span class="n">L</span><span class="p">([</span><span class="s1">'0'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'2'</span><span class="p">,</span><span class="s1">'3'</span><span class="p">],[</span><span class="s1">'4'</span><span class="p">,</span><span class="s1">'5'</span><span class="p">,</span><span class="s1">'6'</span><span class="p">,</span><span class="s1">'7'</span><span class="p">],[</span><span class="s1">'8'</span><span class="p">,</span><span class="s1">'9'</span><span class="p">,</span><span class="s1">'10'</span><span class="p">]))</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">t3</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">noop</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)),</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">test_eq_type</span><span class="p">([</span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span> <span class="p">[</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]),</span><span class="n">tensor</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">])])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">addone</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">addone</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>7</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">create_item</span><span class="o">=</span><span class="n">addone</span><span class="p">)</span>
+<span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">after_item</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">after_item</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="n">create_item</span><span class="o">=</span><span class="n">addone</span><span class="p">)</span>
+<span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="n">ds1</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span><span class="n">bs</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">,</span><span class="n">create_item</span><span class="o">=</span><span class="n">addone</span><span class="p">,</span> <span class="n">after_item</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span> <span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">after_batch</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">L</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="c1"># ds1 = DataLoader(range(12),bs = 4, before_batch=lambda o: o-1)</span>
+<span class="c1"># L(ds1)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [tensor([0, 1, 2, 3]),tensor([4, 5, 6, 7]),tensor([ 8,  9, 10, 11])]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [tensor([1, 2, 3, 4]),tensor([5, 6, 7, 8]),tensor([ 9, 10, 11, 12])]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [tensor([0, 2, 4, 6]),tensor([ 8, 10, 12, 14]),tensor([16, 18, 20, 22])]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [tensor([2, 4, 6, 8]),tensor([10, 12, 14, 16]),tensor([18, 20, 22, 24])]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#3) [tensor([ 9, 12, 15, 18]),tensor([21, 24, 27, 30]),tensor([33, 36, 39, 42])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SleepyDL</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">/</span><span class="mi">50</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">SleepyDL</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">time</span> test_eq(DataLoader(t, num_workers=0), letters)
+<span class="o">%</span><span class="k">time</span> test_eq(DataLoader(t, num_workers=2), letters)
+<span class="o">%</span><span class="k">time</span> test_eq(DataLoader(t, num_workers=4), letters)
+
+<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_shuffled</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">dl</span><span class="p">),</span> <span class="n">letters</span><span class="p">)</span>
+<span class="n">test_shuffled</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="n">dl</span><span class="p">),</span> <span class="n">L</span><span class="p">(</span><span class="n">dl</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 913 µs, sys: 5.14 ms, total: 6.05 ms
+Wall time: 302 ms
+CPU times: user 4.15 ms, sys: 30.2 ms, total: 34.4 ms
+Wall time: 177 ms
+CPU times: user 8.4 ms, sys: 35.2 ms, total: 43.6 ms
+Wall time: 142 ms
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SleepyQueue</span><span class="p">():</span>
+    <span class="s2">"Simulate a queue with varying latency"</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">=</span><span class="n">q</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">queues</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span> <span class="k">return</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span> <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">it</span> <span class="o">=</span> <span class="n">SleepyQueue</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">time</span> test_shuffled(L(DataLoader(it, num_workers=4)), range(30))
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 9.43 ms, sys: 36.3 ms, total: 45.7 ms
+Wall time: 118 ms
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">TensorBase</span><span class="p">):</span> <span class="k">pass</span>
+
+<span class="k">for</span> <span class="n">nw</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">],</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">nw</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">test_eq</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">A</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])),)</span>
+    <span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">],</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">nw</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+    <span class="n">test_eq</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A([[1, 2],
+        [1, 2],
+        [1, 2],
+        [1, 2]])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A([1, 2])</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A([[1, 2],
+        [1, 2],
+        [1, 2],
+        [1, 2]])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A([1, 2])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span><span class="n">bs</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">num_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([30, 18, 29, 38, 43, 25, 23,  1,  0, 22, 13,  9, 27, 47, 16,  3, 15,  7,
+         19, 32, 45, 42, 48, 41, 10, 11,  6, 14, 20, 31, 39, 26]),
+ tensor([34, 35, 33, 24,  5, 28, 36,  4, 40, 49,  8, 21, 37, 17, 44,  2, 12, 46])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">TensorBase</span><span class="p">):</span> <span class="k">pass</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">tdl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t</span><span class="p">],</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">after_batch</span><span class="o">=</span><span class="n">to_device</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">tdl</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># Unknown attributes are delegated to `dataset`</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">tdl</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Override <code>get_idxs</code> to return the same index until consumption of the DL. This is intented to test consistent sampling behavior when <code>num_workers</code>&gt;1.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">AdamantDL</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_idxs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">r</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+
+<span class="n">test_eq</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">AdamantDL</span><span class="p">((</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">))),</span><span class="n">bs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">numel</span><span class="p">(),</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="bowenroom/myBlog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/myBlog/pytorch/fastai/2021/01/27/fastai-dataloader.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/myBlog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/myBlog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/myBlog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>learn DL easily</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/bowenroom" title="bowenroom"><svg class="svg-icon grey"><use xlink:href="/myBlog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/bowenroom1" title="bowenroom1"><svg class="svg-icon grey"><use xlink:href="/myBlog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
