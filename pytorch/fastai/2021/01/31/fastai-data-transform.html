@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-01-31T00:00:00-06:00" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://docs.fast.ai/data.transforms.html and add some tips","@type":"BlogPosting","headline":"fastai data transform","dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html","@context":"https://schema.org"}</script>
+{"dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://docs.fast.ai/data.transforms.html and add some tips","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html","headline":"fastai data transform","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/myBlog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bowenroom.github.io/myBlog/feed.xml" title="Bowenroom" /><link rel="shortcut icon" type="image/x-icon" href="/myBlog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>fastai data transform | Bowenroom</title>
@@ -32,7 +32,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-01-31T00:00:00-06:00" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://docs.fast.ai/data.transforms.html and add some tips","@type":"BlogPosting","headline":"fastai data transform","dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html","@context":"https://schema.org"}</script>
+{"dateModified":"2021-01-31T00:00:00-06:00","datePublished":"2021-01-31T00:00:00-06:00","author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://docs.fast.ai/data.transforms.html and add some tips","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/2021/01/31/fastai-data-transform.html","headline":"fastai data transform","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -95,7 +95,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      15 min read
+      70 min read
     
 </span></p>
 
@@ -765,6 +765,8 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">src</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">src</span>
+<span class="n">labels</span>
 
 <span class="n">f</span> <span class="o">=</span> <span class="n">TrainTestSplitter</span><span class="p">(</span><span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 <span class="n">trn</span><span class="p">,</span><span class="n">val</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
@@ -782,6 +784,90 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[0,
+ 1,
+ 2,
+ 3,
+ 4,
+ 5,
+ 6,
+ 7,
+ 8,
+ 9,
+ 10,
+ 11,
+ 12,
+ 13,
+ 14,
+ 15,
+ 16,
+ 17,
+ 18,
+ 19,
+ 20,
+ 21,
+ 22,
+ 23,
+ 24,
+ 25,
+ 26,
+ 27,
+ 28,
+ 29]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -1029,6 +1115,22 @@ window.onload = wrap_img;
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>26</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -1251,6 +1353,39 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('/home/ubuntu/.fastai/data/mnist_tiny/train/3/9932.png')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">RegexLabeller</span><span class="p">(</span><span class="sa">fr</span><span class="s1">'</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="si">}</span><span class="s1">(\d)</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">'3'</span><span class="p">)</span>
 <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">]</span>
@@ -1418,7 +1553,44 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aa</span> <span class="o">=</span> <span class="n">CategoryMap</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">aa</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[1, 2, 3, 5, 6]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">CategoryMap</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="n">t</span>
+
 <span class="n">test_eq</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">o2i</span><span class="p">,</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">map_objs</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
@@ -1427,6 +1599,22 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[2, 3, 4]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -1591,6 +1779,39 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'cat'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span> <span class="o">=</span> <span class="n">Categorize</span><span class="p">(</span><span class="n">add_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">tds</span> <span class="o">=</span> <span class="n">Datasets</span><span class="p">([</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">,</span> <span class="s1">'cat'</span><span class="p">],</span> <span class="n">tfms</span><span class="o">=</span><span class="p">[</span><span class="n">cat</span><span class="p">])</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="p">[</span><span class="s1">'#na#'</span><span class="p">,</span> <span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">])</span>
@@ -1600,6 +1821,39 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'#na#'</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -1978,8 +2232,8 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>((#3) [Path('/home/jhoward/.fastai/data/mnist_tiny/train/7/723.png'),Path('/home/jhoward/.fastai/data/mnist_tiny/train/7/7446.png'),Path('/home/jhoward/.fastai/data/mnist_tiny/train/7/8566.png')],
- (#3) [Path('/home/jhoward/.fastai/data/mnist_tiny/valid/7/946.png'),Path('/home/jhoward/.fastai/data/mnist_tiny/valid/7/9608.png'),Path('/home/jhoward/.fastai/data/mnist_tiny/valid/7/825.png')])</pre>
+<pre>((#3) [Path('/home/ubuntu/.fastai/data/mnist_tiny/train/3/7634.png'),Path('/home/ubuntu/.fastai/data/mnist_tiny/train/3/8672.png'),Path('/home/ubuntu/.fastai/data/mnist_tiny/train/3/8406.png')],
+ (#3) [Path('/home/ubuntu/.fastai/data/mnist_tiny/valid/3/7215.png'),Path('/home/ubuntu/.fastai/data/mnist_tiny/valid/3/7312.png'),Path('/home/ubuntu/.fastai/data/mnist_tiny/valid/3/8050.png')])</pre>
 </div>
 
 </div>
@@ -2044,13 +2298,768 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_ds</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#709) [(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  26, 138, 233, 253,
+          255, 253, 169,  97,  24,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 120, 252, 252, 252,
+          253, 252, 252, 252, 252,  43,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  17, 228, 252, 195,  79,
+           69, 141, 234, 252, 252, 237,  25,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  24, 252, 252,  45,   0,
+            0,   0,  33, 173, 252, 253,  92,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   3, 117, 252,  45,   0,
+            0,   0,   0,  93, 252, 253,  92,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32, 126,   0,
+            0,   0,   0, 208, 253, 252,  84,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  30, 130, 236, 252, 135,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           49, 228, 252, 227, 130,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  76, 144,
+          233, 252, 185,  50,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  64, 136, 230, 248, 252,
+          243,  64,   6,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 179, 255, 253, 253, 253, 253,
+          244, 138, 138,  44,  24,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 230, 253, 252, 252, 252, 252,
+          253, 252, 252, 252, 252, 151,  17,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 115, 184, 183, 183, 183, 215,
+          253, 252, 252, 252, 252, 253,  92,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  21,
+           46,  45,  45, 215, 252, 253,  92,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0, 116, 248, 252, 253,  92,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,  93, 201,   0,   0,   0,   0,   0,
+           24, 159, 253, 253, 253, 158,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0, 166, 252,   0,   0,   0,   0,  22,
+          212, 252, 252, 252, 231,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0, 207, 252, 123,  70, 153, 184, 215,
+          253, 252, 252, 153,  37,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0, 113, 252, 253, 252, 252, 252, 252,
+          253, 193,  77,   9,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   9, 128, 201, 252, 252, 252, 200,
+           75,   8,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,  13,  41, 141, 104,  29, 141, 141,
+          229, 203, 141,  47,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,  19, 144, 253, 252, 252, 252, 253, 252,
+          252, 252, 253, 159,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,  57, 243, 244, 168, 168, 118, 106,  56,
+          209, 252, 253, 109,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,  25,  25,   0,   0,   0,   0,   0,
+          197, 252, 228,   9,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   4, 128,
+          253, 253, 214,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 104, 252,
+          252, 227,  38,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  89, 229, 252,
+          252, 103,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  26, 150, 237, 253, 252,
+          214, 116,  13,  38,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 104, 253, 253, 253, 255, 253,
+          253, 253, 255, 253, 128,   4,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 228, 252, 252, 227, 197, 196,
+          196, 221, 253, 252, 252, 128,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  44, 168, 130,  31,   0,   0,
+            0,  25, 119, 224, 252, 252,  89,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,  44, 228, 252, 213,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0, 198, 253, 226,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0, 197, 252, 225,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,  57, 215, 252, 187,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  26, 113,  63,   0,   0,
+            0,   0,  26, 243, 252, 252,  63,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0, 170, 253, 153,   0,   0,
+            0,  26, 204, 253, 253, 128,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0, 144, 252, 252, 169, 169,
+          169, 243, 253, 252, 170,   9,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  13, 209, 252, 253, 252,
+          252, 252, 244,  93,  13,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  59, 190, 253, 252,
+          252, 202, 125,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  37, 187, 254, 254, 255,
+          233, 149,  41,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   8, 202, 252, 234, 234, 234,
+          239, 254, 242, 147,  13,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  99, 254, 135,   0,   0,   0,
+           18,  86, 230, 254, 155,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   8,  57,   3,   0,   0,   0,
+            0,   0,  13, 236, 208,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  31, 242, 254,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   5, 195, 254, 133,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   4,  20,
+          119, 203, 254, 182,  32,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  40, 254,
+          254, 254, 169,   6,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  34, 214,
+          254, 238,  18,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          179, 254, 183,  46,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 193, 254, 177,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  18, 188, 248,  95,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0, 176, 254, 155,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0, 176, 254, 140,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0, 176, 238,  36,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  35, 187, 192,   0,
+           14, 149, 254,  95,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  28, 218, 179,  18,   8,
+          225, 254, 141,   3,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  41, 242, 169,  94, 206,
+          254, 141,  24,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 162, 254, 254, 254,
+          132,   3,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  73, 186, 238,  81,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32,  43,  32,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   8,  85, 173, 191, 237, 252, 237, 190,
+          191, 111,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  13, 136, 234, 252, 235, 170, 126, 126, 126, 170,
+          236, 252, 172,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 174, 252, 252, 183,  14,   0,   0,   0,   0,   0,
+           14, 120, 247, 196,  28,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 253, 252, 190,  14,   0,   0,   0,   0,   0,   0,
+            0,   0, 144, 252,  86,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 237, 239,  17,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 253, 253,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  55, 112,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 252, 252,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  16,  85, 252, 252,   9,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  59,  91, 169,
+          169, 232, 252, 252, 252, 204, 133,  32,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  18, 141, 249, 252, 164,
+          209, 252, 252, 252, 252, 253, 252, 223,  35,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  36, 210, 253, 170,  11,  87,
+          255, 253, 250, 185,  62, 175, 253, 253, 253,  60,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 217, 125, 206, 252,
+          253, 252, 196,   0,   0,  11, 127, 252, 252, 226,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 252, 252, 252, 252,
+          241, 117,  11,   0,   0,   0,   7, 136, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 205, 189, 189, 101,
+           35,   0,   0,   0,   0,   0,   0, 127, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  35,  86,  11,   0,   0,   0,
+            0,   0,   0,   0,   0,   0, 116, 232, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   4,  43,  43, 210, 253, 253, 253, 218,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 109,   7,   0,   0,   0,   0,   0,   0,  71,
+           86, 164, 195, 252, 252, 253, 252, 252, 196,  28,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 181, 225, 127, 127, 189, 232, 232, 232, 249,
+          253, 252, 252, 252, 252, 241, 196,  73,   7,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,  64, 194, 210, 242, 216, 189, 189, 189, 189,
+          128, 184, 185,  84,  84,  35,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   4,  14,  35,  18,   0,   0,   0,   0,
+            0,  14,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  10,  29, 154,
+          253, 253, 140,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  13, 172, 252, 247,
+          208, 252,  65,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  10, 172, 252, 177,  50,
+          144, 186,   6,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  16, 215, 127,   3,   0,
+          169, 118,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  13, 204,
+          209,  25,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  57, 206, 247,
+           65,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  57, 191, 214,  50,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  63, 206, 252, 240, 126,
+          225, 225, 225, 226, 225, 187,  13,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0, 141, 253, 253, 253, 255,
+          234, 225, 238, 255, 253, 206,  13,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  60, 196, 158,  84,  84,
+           28,   0,  38, 103, 252, 168,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,  66, 252, 168,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0, 191, 252, 118,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  63, 255, 134,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  19, 194, 247,  65,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  10,
+           28, 123, 252, 150,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  51, 154,
+          110, 246, 252,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  10, 179,  79,
+          216, 206,  13,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 110, 252, 216,
+          240,  81,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  19, 215, 252, 244,
+           81,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32, 228, 151,  25,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  19, 149, 231, 254, 254,
+          231, 145,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  49, 238, 243, 243, 243,
+          246, 251, 182,  13,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           45, 244, 253, 120,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 128, 253, 230,   6,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 115, 253, 246,  53,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 127, 253, 228,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           21, 228, 253, 228,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  24,  40,
+           91, 253, 253, 158,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 149, 229, 253,
+          254, 253, 253,  30,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 194, 253, 253,
+          253, 253, 226,  18,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  38,  49,  49,
+           73, 196, 253, 151,   2,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  53, 253, 254,  74,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  15, 253, 253, 158,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  15, 253, 253, 173,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  16, 253, 254, 173,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 124, 153,   6,   0,   0,   0,
+            0,  15, 253, 253, 104,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,  70, 252, 168,   0,   0,   0,   0,
+            0, 122, 253, 250,  64,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0, 149, 253, 232,  82,   0,   0,   0,
+           81, 244, 253, 193,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,  66, 232, 254, 252, 245, 245, 245,
+          250, 251, 181,  16,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  28,  54, 164, 253, 253, 253,
+          230, 144,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  99, 219,
+          253, 255, 253, 253, 182,  12,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  18,  78, 208, 249, 252,
+          252, 253, 252, 252, 252,  64,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0, 171, 252, 252, 252, 249,
+          237, 176, 223, 252, 252, 177,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0, 153, 252, 188, 132, 110,
+            0,  50, 229, 252, 252, 107,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   9,  29,  14,   0,   0,
+            0, 105, 252, 252, 216,  20,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   6,
+           30, 210, 252, 223,  39,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  45,
+          252, 253, 252,  88,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32, 206,
+          252, 253, 142,   5,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 204, 252,
+          252, 173,  10,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  80, 246, 252,
+          252, 149,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  31, 253, 253, 253,
+          253, 193, 105, 105, 105,  12,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 153, 252, 252, 252,
+          252, 253, 252, 252, 252, 169,  18,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  82, 252, 252, 252,
+          252, 253, 252, 252, 252, 252, 170,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  16, 132, 132, 132,
+          132, 133, 132, 210, 252, 252, 151,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  98, 242, 252, 252,  74,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  85,  47,   9,   0,   0,   0,
+           18,  92, 239, 252, 252, 243,  65,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 120, 252, 152,   0, 128, 134,
+          203, 253, 252, 252, 252,  99,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 120, 252, 250, 238, 251, 252,
+          252, 253, 252, 184,  14,   2,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  99, 220, 252, 252, 252, 244,
+          207, 208,  84,  21,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  31, 121, 252, 111,  85,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  71, 228, 196,
+          143,  73,  73,  73,  53,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 141, 253, 254,
+          253, 253, 253, 253, 249, 216,  21,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  16, 101, 127,
+          127, 127, 127, 127, 163, 253, 114,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0, 119, 253,  88,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,  33, 254, 253,  36,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  38, 228, 255, 115,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  73, 243, 253, 115,   2,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  50,
+          146, 248, 218,  94,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  15, 116, 234,
+          229,  99,  12,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  59, 238, 253, 254,
+          218,  13,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  46,  91,  91, 137,
+          254, 185,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   5,
+          133, 224,  12,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           55, 253,  67,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           55, 253, 106,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+          120, 253,  54,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  47,
+          247, 217,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  20, 209,
+          241, 106,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  19,  76, 204, 243,
+          137,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,  68, 199, 134, 110, 128, 226, 253, 207, 104,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,  49, 168, 253, 254, 253, 207, 124,  21,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  44,
+          105, 202, 254, 254, 254, 254, 255, 228,  43,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  73, 209, 229,
+          253, 253, 253, 253, 253, 253, 253, 253, 139,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  11,  95, 164, 233, 253, 254,
+          253, 243, 238, 238, 240, 253, 253, 253, 155,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 179, 253, 253, 253, 253, 205,
+          133,  47,   0,   0, 102, 253, 253, 253, 104,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  38, 178, 178, 178,  90,  17,
+            0,   0,  36, 120, 245, 253, 253, 240,  73,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 118, 214, 253, 253, 253, 189,  61,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  80, 135,
+          134, 212, 253, 253, 253, 181,  77,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  86, 239, 247, 254,
+          253, 253, 253, 253, 235,  49,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  75, 216, 253, 254,
+          216, 208, 229, 253, 253, 222,  38,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  19, 104, 105,
+           18,   0, 120, 253, 253, 253, 163,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0, 226, 254, 254, 164,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0, 136, 253, 253, 216,  35,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0, 224, 253, 253, 163,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0, 224, 253, 253, 163,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  58, 224, 250, 253, 253,  31,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,  75, 144,  30,  16,   0,   0,   0,   0,   0,   0,   0,
+            0, 164, 253, 253, 235,  88,   4,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0, 184, 253, 253, 133,   0,   0,   0,   0,   0,   0, 135,
+          134, 212, 253, 253, 157,  56,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0, 255, 253, 253, 247, 239, 239, 239, 239, 239, 239, 255,
+          253, 253, 253, 129,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0, 121, 245, 253, 253, 253, 253, 253, 253, 253, 253, 254,
+          242, 208, 137,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  86, 113, 253, 253, 253, 253, 253, 253, 253, 105,
+           80,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0)),(TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   2, 113, 254,
+          254, 255, 254, 133,   8,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1, 112, 253, 253,
+          253, 253, 253, 253, 106,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 166, 253, 253, 253,
+          176,  82, 213, 253, 185,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  80, 251, 253, 242, 100,
+           15,   0, 113, 253, 246,  66,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  70, 250, 192,  39,   0,
+            0,   0, 113, 253, 229,  16,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  28,  13,   0,   0,
+            0,  40, 227, 253, 119,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  98, 253, 253, 104,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            8, 217, 253, 164,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  10,
+          161, 253, 215,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  21, 164, 177, 112,  79, 195,
+          253, 187,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  89, 253, 253, 253, 253, 253,
+          253, 104,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  15, 145, 158, 158, 139,  69,
+          158, 179,   9,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 213,  76,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 213, 199,   3,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0, 213, 253,   5,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+           73, 239, 232,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  11,  93,
+          237, 253, 111,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  58, 210, 253,
+          253, 139,   5,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  36, 150, 219, 238, 237, 152,
+           62,   6,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 199, 253, 140,  69,  14,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8), TensorCategory(0))...]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">train_ds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">x</span>
+<span class="n">y</span>
 <span class="n">xd</span><span class="p">,</span><span class="n">yd</span> <span class="o">=</span> <span class="n">decode_at</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">xd</span>
+<span class="n">yd</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">parent_label</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="n">yd</span><span class="p">)</span>
 <span class="n">test_eq</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="mi">3</span><span class="p">])),</span><span class="n">xd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32,  43,  32,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   8,  85, 173, 191, 237, 252, 237, 190,
+          191, 111,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  13, 136, 234, 252, 235, 170, 126, 126, 126, 170,
+          236, 252, 172,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 174, 252, 252, 183,  14,   0,   0,   0,   0,   0,
+           14, 120, 247, 196,  28,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 253, 252, 190,  14,   0,   0,   0,   0,   0,   0,
+            0,   0, 144, 252,  86,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 237, 239,  17,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 253, 253,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  55, 112,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 252, 252,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  16,  85, 252, 252,   9,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  59,  91, 169,
+          169, 232, 252, 252, 252, 204, 133,  32,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  18, 141, 249, 252, 164,
+          209, 252, 252, 252, 252, 253, 252, 223,  35,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  36, 210, 253, 170,  11,  87,
+          255, 253, 250, 185,  62, 175, 253, 253, 253,  60,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 217, 125, 206, 252,
+          253, 252, 196,   0,   0,  11, 127, 252, 252, 226,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 252, 252, 252, 252,
+          241, 117,  11,   0,   0,   0,   7, 136, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 205, 189, 189, 101,
+           35,   0,   0,   0,   0,   0,   0, 127, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  35,  86,  11,   0,   0,   0,
+            0,   0,   0,   0,   0,   0, 116, 232, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   4,  43,  43, 210, 253, 253, 253, 218,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 109,   7,   0,   0,   0,   0,   0,   0,  71,
+           86, 164, 195, 252, 252, 253, 252, 252, 196,  28,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 181, 225, 127, 127, 189, 232, 232, 232, 249,
+          253, 252, 252, 252, 252, 241, 196,  73,   7,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,  64, 194, 210, 242, 216, 189, 189, 189, 189,
+          128, 184, 185,  84,  84,  35,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   4,  14,  35,  18,   0,   0,   0,   0,
+            0,  14,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>TensorCategory(0)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>TensorImage([[[  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  32,  43,  32,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   8,  85, 173, 191, 237, 252, 237, 190,
+          191, 111,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  13, 136, 234, 252, 235, 170, 126, 126, 126, 170,
+          236, 252, 172,   7,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 174, 252, 252, 183,  14,   0,   0,   0,   0,   0,
+           14, 120, 247, 196,  28,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 253, 252, 190,  14,   0,   0,   0,   0,   0,   0,
+            0,   0, 144, 252,  86,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0, 237, 239,  17,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 253, 253,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,  55, 112,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,  22, 252, 252,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,  16,  85, 252, 252,   9,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  59,  91, 169,
+          169, 232, 252, 252, 252, 204, 133,  32,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,  18, 141, 249, 252, 164,
+          209, 252, 252, 252, 252, 253, 252, 223,  35,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  36, 210, 253, 170,  11,  87,
+          255, 253, 250, 185,  62, 175, 253, 253, 253,  60,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 217, 125, 206, 252,
+          253, 252, 196,   0,   0,  11, 127, 252, 252, 226,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 252, 252, 252, 252,
+          241, 117,  11,   0,   0,   0,   7, 136, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0, 211, 253, 205, 189, 189, 101,
+           35,   0,   0,   0,   0,   0,   0, 127, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,  35,  86,  11,   0,   0,   0,
+            0,   0,   0,   0,   0,   0, 116, 232, 252, 252,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   4,  43,  43, 210, 253, 253, 253, 218,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 109,   7,   0,   0,   0,   0,   0,   0,  71,
+           86, 164, 195, 252, 252, 253, 252, 252, 196,  28,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0, 181, 225, 127, 127, 189, 232, 232, 232, 249,
+          253, 252, 252, 252, 252, 241, 196,  73,   7,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,  64, 194, 210, 242, 216, 189, 189, 189, 189,
+          128, 184, 185,  84,  84,  35,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   4,  14,  35,  18,   0,   0,   0,   0,
+            0,  14,   4,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+         [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+            0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]]],
+       dtype=torch.uint8)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'3'</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -2079,7 +3088,7 @@ window.onload = wrap_img;
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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%0A">
+<img src="data:image/png;base64,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%0A">
 </div>
 
 </div>
@@ -2240,13 +3249,167 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[1, 1, 1, 1, 1]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">aa</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="n">broadcast_vec</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">aa</span><span class="p">)</span>
+<span class="n">bb</span>
+<span class="n">aa</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">bb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[1, 2],
+       [2, 2]])</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([[[[[[1],
+             [2],
+             [2],
+             [2]]]]]], device='cuda:0')]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([1, 1, 1, 1, 4, 1])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean</span><span class="p">,</span><span class="n">std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,[</span><span class="mf">0.5</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+<span class="n">mean</span><span class="p">,</span><span class="n">std</span>
 <span class="n">mean</span><span class="p">,</span><span class="n">std</span> <span class="o">=</span> <span class="n">broadcast_vec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">,</span><span class="n">std</span>
+<span class="n">mean</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">std</span><span class="o">.</span><span class="n">shape</span>
 <span class="n">batch_tfms</span> <span class="o">=</span> <span class="p">[</span><span class="n">IntToFloatTensor</span><span class="p">(),</span> <span class="n">Normalize</span><span class="o">.</span><span class="n">from_stats</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span><span class="n">std</span><span class="p">)]</span>
 <span class="n">tdl</span> <span class="o">=</span> <span class="n">TfmdDL</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">after_batch</span><span class="o">=</span><span class="n">batch_tfms</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">default_device</span><span class="p">())</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([[[[0.5000]],
+ 
+          [[0.5000]],
+ 
+          [[0.5000]]]], device='cuda:0'),
+ tensor([[[[0.5000]],
+ 
+          [[0.5000]],
+ 
+          [[0.5000]]]], device='cuda:0'))</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([1, 3, 1, 1])</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([1, 3, 1, 1])</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
