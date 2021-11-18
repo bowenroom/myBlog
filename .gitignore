@@ -11,3 +11,9 @@ _notebooks/.ipynb_checkpoints
 .netlify
 .tweet-cache
 __pycache__
+# checkpoint files
+_notebooks/checkpoints/
+_notebooks/iccv09Data/
+_notebooks/work_dirs/
+
+*.tar.gz
