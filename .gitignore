@@ -16,5 +16,5 @@ _notebooks/checkpoints/
 _notebooks/iccv09Data/
 _notebooks/unfinished/
 _notebooks/work_dirs/
-
+codeIdeas/
 *.tar.gz
