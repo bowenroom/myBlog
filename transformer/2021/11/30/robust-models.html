@@ -175,9 +175,12 @@ window.onload = wrap_img;
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">tvF</span>
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">transforms</span>
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">PILToTensor</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">timm.models.layers</span> <span class="kn">import</span> <span class="n">trunc_normal_</span><span class="p">,</span> <span class="n">DropPath</span>
+<span class="kn">from</span> <span class="nn">timm.data</span> <span class="kn">import</span> <span class="n">IMAGENET_DEFAULT_MEAN</span><span class="p">,</span> <span class="n">IMAGENET_DEFAULT_STD</span>
+<span class="kn">from</span> <span class="nn">timm.models.vision_transformer</span> <span class="kn">import</span> <span class="n">_cfg</span>
+<span class="kn">from</span> <span class="nn">einops</span> <span class="kn">import</span> <span class="n">rearrange</span>
+<span class="kn">from</span> <span class="nn">timm.models.registry</span> <span class="kn">import</span> <span class="n">register_model</span>
 
 <span class="n">set_seed</span><span class="p">(</span><span class="mi">105</span><span class="p">)</span>
 </pre></div>
@@ -489,28 +492,6 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">timm.models.layers</span> <span class="kn">import</span> <span class="n">trunc_normal_</span><span class="p">,</span> <span class="n">DropPath</span>
-<span class="kn">from</span> <span class="nn">timm.data</span> <span class="kn">import</span> <span class="n">IMAGENET_DEFAULT_MEAN</span><span class="p">,</span> <span class="n">IMAGENET_DEFAULT_STD</span>
-<span class="kn">from</span> <span class="nn">timm.models.vision_transformer</span> <span class="kn">import</span> <span class="n">_cfg</span>
-<span class="kn">from</span> <span class="nn">einops</span> <span class="kn">import</span> <span class="n">rearrange</span>
-<span class="kn">from</span> <span class="nn">timm.models.registry</span> <span class="kn">import</span> <span class="n">register_model</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
     
     
 <div class="cell border-box-sizing code_cell rendered">
