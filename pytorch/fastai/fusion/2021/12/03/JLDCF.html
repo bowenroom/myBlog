@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>RGB and RGB-D Fusion | Bowenroom</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="RGB and RGB-D Fusion" />
+<meta name="author" content="Bowen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips" />
+<meta property="og:description" content="borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips" />
+<link rel="canonical" href="https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html" />
+<meta property="og:url" content="https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html" />
+<meta property="og:site_name" content="Bowenroom" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-03T00:00:00-06:00" />
+<script type="application/ld+json">
+{"dateModified":"2021-12-03T00:00:00-06:00","datePublished":"2021-12-03T00:00:00-06:00","author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html","headline":"RGB and RGB-D Fusion","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/myBlog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bowenroom.github.io/myBlog/feed.xml" title="Bowenroom" /><link rel="shortcut icon" type="image/x-icon" href="/myBlog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>RGB and RGB-D Fusion | Bowenroom</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="RGB and RGB-D Fusion" />
+<meta name="author" content="Bowen" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips" />
+<meta property="og:description" content="borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips" />
+<link rel="canonical" href="https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html" />
+<meta property="og:url" content="https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html" />
+<meta property="og:site_name" content="Bowenroom" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-03T00:00:00-06:00" />
+<script type="application/ld+json">
+{"dateModified":"2021-12-03T00:00:00-06:00","datePublished":"2021-12-03T00:00:00-06:00","author":{"@type":"Person","name":"Bowen"},"description":"borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html"},"url":"https://bowenroom.github.io/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html","headline":"RGB and RGB-D Fusion","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://bowenroom.github.io/myBlog/feed.xml" title="Bowenroom" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/myBlog/">Bowenroom</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/myBlog/about/">About Me</a><a class="page-link" href="/myBlog/search/">Search</a><a class="page-link" href="/myBlog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RGB and RGB-D Fusion</h1><p class="page-description">borrow code from https://github.com/jiangyao-scu/JL-DCF-pytorch and add some tips</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-03T00:00:00-06:00" itemprop="datePublished">
+        Dec 3, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Bowen</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/myBlog/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/myBlog/categories/#fastai">fastai</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/myBlog/categories/#fusion">fusion</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/bowenroom/myBlog/tree/master/_notebooks/2021-12-03-JLDCF.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/myBlog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/bowenroom/myBlog/master?filepath=_notebooks%2F2021-12-03-JLDCF.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/myBlog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/bowenroom/myBlog/blob/master/_notebooks/2021-12-03-JLDCF.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/myBlog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#dataset-overview">dataset overview </a></li>
+<li class="toc-entry toc-h2"><a href="#slicing-issues-of-three-dimensions">slicing issues of three dimensions </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-12-03-JLDCF.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://i.loli.net/2021/12/03/nHjQ158cRYxFCAZ.png" alt=""></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">mmcv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">fastcore.basics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastai.torch_basics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">kornia</span>
+<span class="kn">from</span> <span class="nn">kornia.constants</span> <span class="kn">import</span> <span class="n">Resample</span>
+<span class="kn">from</span> <span class="nn">kornia.color</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">kornia</span> <span class="kn">import</span> <span class="n">augmentation</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">import</span> <span class="nn">kornia.augmentation</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">kornia.augmentation.random_generator</span> <span class="k">as</span> <span class="nn">rg</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">tvF</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">PILToTensor</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">timm.models.layers</span> <span class="kn">import</span> <span class="n">trunc_normal_</span><span class="p">,</span> <span class="n">DropPath</span>
+<span class="kn">from</span> <span class="nn">timm.data</span> <span class="kn">import</span> <span class="n">IMAGENET_DEFAULT_MEAN</span><span class="p">,</span> <span class="n">IMAGENET_DEFAULT_STD</span>
+<span class="kn">from</span> <span class="nn">timm.models.vision_transformer</span> <span class="kn">import</span> <span class="n">_cfg</span>
+<span class="kn">from</span> <span class="nn">einops</span> <span class="kn">import</span> <span class="n">rearrange</span>
+<span class="kn">from</span> <span class="nn">timm.models.registry</span> <span class="kn">import</span> <span class="n">register_model</span>
+
+<span class="n">set_seed</span><span class="p">(</span><span class="mi">105</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="dataset-overview">
+<a class="anchor" href="#dataset-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>dataset overview<a class="anchor-link" href="#dataset-overview"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rootPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/'</span><span class="p">)</span>
+<span class="n">rgbPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/LR/'</span><span class="p">)</span>
+<span class="n">depPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/depth/'</span><span class="p">)</span>
+<span class="n">gtPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/GT/'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rgbFiles</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">rgbPath</span><span class="p">)</span>
+<span class="n">depFiles</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">depPath</span><span class="p">)</span>
+<span class="n">lblFiles</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">gtPath</span><span class="p">)</span>
+<span class="n">rgbFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">depFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">lblFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/LR/001477_left_1_ori.jpg')</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/depth/10_01-16-36_0_Depth.png')</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/GT/9_07-38-26_0_GT.png')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">to_tensor</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+<span class="n">to_pil</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>
+<span class="n">rgbImage</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rgbFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">lblImage</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">lblFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">depImage</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">depFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">rgbTensor</span> <span class="o">=</span> <span class="n">image2tensor</span><span class="p">(</span><span class="n">rgbImage</span><span class="p">)</span>
+<span class="n">lblTensor</span> <span class="o">=</span> <span class="n">image2tensor</span><span class="p">(</span><span class="n">lblImage</span><span class="p">)</span>
+<span class="n">depTensor</span> <span class="o">=</span> <span class="n">image2tensor</span><span class="p">(</span><span class="n">depImage</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">depTensor</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">depTensor</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,
+         14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,
+         28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38,  39,  40,  41,
+         42,  43,  44,  45,  46,  47,  48,  49,  50,  51,  52,  53,  54,  55,
+         56,  57,  58,  59,  60,  61,  62,  63,  64,  65,  66,  67,  68,  69,
+         70,  71,  72,  73,  74,  75,  76,  77,  78,  79,  80,  81,  82,  83,
+         84,  85,  86,  87,  88,  89,  90,  91,  92,  93,  94,  95,  96,  97,
+         98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+        112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125,
+        126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139,
+        140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153,
+        154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167,
+        168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181,
+        182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195,
+        196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209,
+        210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223,
+        224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237,
+        238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251,
+        252, 253, 254, 255], dtype=torch.uint8)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>256</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="k">def</span> <span class="nf">Normalization</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="n">set_trace</span><span class="p">()</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="n">in_</span> <span class="o">/</span> <span class="mf">255.0</span>
+    <span class="n">in_</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">))</span>
+    <span class="n">in_</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">in_</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">temp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">temp</span><span class="o">-=</span><span class="n">temp2</span>
+<span class="n">temp</span><span class="o">/=</span><span class="n">temp2</span>
+<span class="n">temp</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([-0.5, -0.5, -0.5], dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">image_size</span><span class="p">):</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">in_</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">))</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="n">Normalization</span><span class="p">(</span><span class="n">in_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">in_</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rgbFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/LR/001477_left_1_ori.jpg')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="slicing-issues-of-three-dimensions">
+<a class="anchor" href="#slicing-issues-of-three-dimensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>slicing issues of three dimensions<a class="anchor-link" href="#slicing-issues-of-three-dimensions"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+ 
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]],</span>
+              <span class="p">[[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">]],</span>
+              <span class="p">[[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="p">[</span><span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">36</span><span class="p">]],</span>
+              <span class="p">])</span>
+ 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'b is </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[0, ::],b[1, ::],b[-1, ::],b[0:2, ::]"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[0, ::]"</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">::],</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">::]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[1, ::]"</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">::],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">::]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[-1, ::]"</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">::],</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">::]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[0:2, ::]"</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">::],</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">::]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, 0:],b[:, 1:],b[:, -1:],b[:, 0:2:]"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, 0:]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:],</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, 1:]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, -1:]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">b</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, 0:2:]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">:],</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[::, 0],b[::, 1],b[::, -1],b[::, 0:2:]"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[::, 0]"</span><span class="p">,</span><span class="n">b</span><span class="p">[::,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[::,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[::, 1]"</span><span class="p">,</span><span class="n">b</span><span class="p">[::,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[::,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[::, -1]"</span><span class="p">,</span><span class="n">b</span><span class="p">[::,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[::,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[::, 0:2:]"</span><span class="p">,</span><span class="n">b</span><span class="p">[::,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">:],</span> <span class="n">b</span><span class="p">[::,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:,:, 0],b[:,:, 1],b[:,:, -1],b[:,:, 0:2:]"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, :, 0]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, :, 1]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"b[:, :, -1]"</span><span class="p">,</span><span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>b is [[[ 1  2  3  4]
+  [ 5  6  7  8]
+  [ 9 10 11 12]]
+
+ [[13 14 15 16]
+  [17 18 19 20]
+  [21 22 23 24]]
+
+ [[25 26 27 28]
+  [29 30 31 32]
+  [33 34 35 36]]]
+(3, 3, 4)
+b[0, ::],b[1, ::],b[-1, ::],b[0:2, ::]
+b[0, ::] [[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]] (3, 4)
+b[1, ::] [[13 14 15 16]
+ [17 18 19 20]
+ [21 22 23 24]] (3, 4)
+b[-1, ::] [[25 26 27 28]
+ [29 30 31 32]
+ [33 34 35 36]] (3, 4)
+b[0:2, ::] [[[ 1  2  3  4]
+  [ 5  6  7  8]
+  [ 9 10 11 12]]
+
+ [[13 14 15 16]
+  [17 18 19 20]
+  [21 22 23 24]]] (2, 3, 4)
+b[:, 0:],b[:, 1:],b[:, -1:],b[:, 0:2:]
+b[:, 0:] [[[ 1  2  3  4]
+  [ 5  6  7  8]
+  [ 9 10 11 12]]
+
+ [[13 14 15 16]
+  [17 18 19 20]
+  [21 22 23 24]]
+
+ [[25 26 27 28]
+  [29 30 31 32]
+  [33 34 35 36]]] (3, 3, 4)
+b[:, 1:] [[[ 5  6  7  8]
+  [ 9 10 11 12]]
+
+ [[17 18 19 20]
+  [21 22 23 24]]
+
+ [[29 30 31 32]
+  [33 34 35 36]]] (3, 2, 4)
+b[:, -1:] [[[ 9 10 11 12]]
+
+ [[21 22 23 24]]
+
+ [[33 34 35 36]]] (3, 1, 4)
+b[:, 0:2:] [[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[13 14 15 16]
+  [17 18 19 20]]
+
+ [[25 26 27 28]
+  [29 30 31 32]]] (3, 2, 4)
+b[::, 0],b[::, 1],b[::, -1],b[::, 0:2:]
+b[::, 0] [[ 1  2  3  4]
+ [13 14 15 16]
+ [25 26 27 28]] (3, 4)
+b[::, 1] [[ 5  6  7  8]
+ [17 18 19 20]
+ [29 30 31 32]] (3, 4)
+b[::, -1] [[ 9 10 11 12]
+ [21 22 23 24]
+ [33 34 35 36]] (3, 4)
+b[::, 0:2:] [[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[13 14 15 16]
+  [17 18 19 20]]
+
+ [[25 26 27 28]
+  [29 30 31 32]]] (3, 2, 4)
+b[:,:, 0],b[:,:, 1],b[:,:, -1],b[:,:, 0:2:]
+b[:, :, 0] [[ 1  5  9]
+ [13 17 21]
+ [25 29 33]] (3, 3)
+b[:, :, 1] [[ 2  6 10]
+ [14 18 22]
+ [26 30 34]] (3, 3)
+b[:, :, -1] [[ 4  8 12]
+ [16 20 24]
+ [28 32 36]] (3, 3)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">load_image</span><span class="p">(</span><span class="s1">'/home/ubuntu/sharedData/swp/dlLab/fastaiRepository/fastai/data/SOD/RGBDcollection/LR/001477_left_1_ori.jpg'</span><span class="p">,</span><span class="mi">512</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&gt; <span class="ansi-green-fg">/tmp/ipykernel_27971/2475151000.py</span>(4)<span class="ansi-cyan-fg">Normalization</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">      2 </span><span class="ansi-green-fg">def</span> Normalization<span class="ansi-blue-fg">(</span>image<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">      3 </span><span class="ansi-red-fg">    </span>set_trace<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 4 </span><span class="ansi-red-fg">    </span>in_ <span class="ansi-blue-fg">=</span> image<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">      5 </span><span class="ansi-red-fg">    </span>in_ <span class="ansi-blue-fg">=</span> in_ <span class="ansi-blue-fg">/</span> <span class="ansi-cyan-fg">255.0</span>
+<span class="ansi-green-fg">      6 </span><span class="ansi-red-fg">    </span>in_ <span class="ansi-blue-fg">-=</span> np<span class="ansi-blue-fg">.</span>array<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0.485</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0.456</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0.406</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+ipdb&gt; image
+array([[[253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        ...,
+        [233.48633, 227.48633, 220.48633],
+        [229.1377 , 223.1377 , 216.1377 ],
+        [229.     , 223.     , 216.     ]],
+
+       [[253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        ...,
+        [231.33528, 225.33528, 218.33528],
+        [226.27832, 220.27832, 213.27832],
+        [225.80833, 219.80833, 212.80833]],
+
+       [[253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        [253.     , 254.     , 250.     ],
+        ...,
+        [227.54199, 221.54199, 214.54199],
+        [221.57063, 215.57063, 208.57063],
+        [220.44151, 214.44151, 207.44151]],
+
+       ...,
+
+       [[155.9414 , 209.9414 , 232.9414 ],
+        [160.46158, 217.38704, 239.74835],
+        [160.13832, 217.13832, 242.88148],
+        ...,
+        [179.43697, 191.89355, 189.5206 ],
+        [197.98697, 203.39127, 201.27083],
+        [213.76942, 216.80284, 211.10059]],
+
+       [[162.80006, 216.80006, 239.80006],
+        [166.23418, 222.28008, 247.28008],
+        [161.94725, 218.94725, 244.69041],
+        ...,
+        [171.4502 , 187.0498 , 183.25977],
+        [191.20839, 200.35136, 197.21504],
+        [208.32304, 215.38841, 209.03665]],
+
+       [[171.0459 , 225.0459 , 248.0459 ],
+        [172.8623 , 228.9082 , 253.9082 ],
+        [165.54102, 222.54102, 248.28418],
+        ...,
+        [163.8252 , 182.28418, 177.54102],
+        [186.31152, 196.49512, 190.58691],
+        [203.51367, 211.9082 , 204.55957]]], dtype=float32)
+ipdb&gt; image.shape
+(512, 512, 3)
+ipdb&gt; image[:, :, ::-1]
+array([[[250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        ...,
+        [220.48633, 227.48633, 233.48633],
+        [216.1377 , 223.1377 , 229.1377 ],
+        [216.     , 223.     , 229.     ]],
+
+       [[250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        ...,
+        [218.33528, 225.33528, 231.33528],
+        [213.27832, 220.27832, 226.27832],
+        [212.80833, 219.80833, 225.80833]],
+
+       [[250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        [250.     , 254.     , 253.     ],
+        ...,
+        [214.54199, 221.54199, 227.54199],
+        [208.57063, 215.57063, 221.57063],
+        [207.44151, 214.44151, 220.44151]],
+
+       ...,
+
+       [[232.9414 , 209.9414 , 155.9414 ],
+        [239.74835, 217.38704, 160.46158],
+        [242.88148, 217.13832, 160.13832],
+        ...,
+        [189.5206 , 191.89355, 179.43697],
+        [201.27083, 203.39127, 197.98697],
+        [211.10059, 216.80284, 213.76942]],
+
+       [[239.80006, 216.80006, 162.80006],
+        [247.28008, 222.28008, 166.23418],
+        [244.69041, 218.94725, 161.94725],
+        ...,
+        [183.25977, 187.0498 , 171.4502 ],
+        [197.21504, 200.35136, 191.20839],
+        [209.03665, 215.38841, 208.32304]],
+
+       [[248.0459 , 225.0459 , 171.0459 ],
+        [253.9082 , 228.9082 , 172.8623 ],
+        [248.28418, 222.54102, 165.54102],
+        ...,
+        [177.54102, 182.28418, 163.8252 ],
+        [190.58691, 196.49512, 186.31152],
+        [204.55957, 211.9082 , 203.51367]]], dtype=float32)
+ipdb&gt; image[:, :, ::-1].shape
+(512, 512, 3)
+ipdb&gt; c
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[[2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        ...,
+        [1.6578702 , 1.9468895 , 2.265034  ],
+        [1.5834007 , 1.8707579 , 2.189241  ],
+        [1.5810429 , 1.8683474 , 2.186841  ]],
+
+       [[2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        ...,
+        [1.6210339 , 1.9092311 , 2.2275429 ],
+        [1.5344347 , 1.8206987 , 2.1394043 ],
+        [1.5263865 , 1.8124709 , 2.131213  ]],
+
+       [[2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        [2.1632845 , 2.4110646 , 2.6051416 ],
+        ...,
+        [1.5560747 , 1.842822  , 2.1614292 ],
+        [1.4538167 , 1.7382812 , 2.0573533 ],
+        [1.4344808 , 1.7185138 , 2.0376735 ]],
+
+       ...,
+
+       [[1.8711603 , 1.6397306 , 0.9134887 ],
+        [1.9877274 , 1.7700812 , 0.9922714 ],
+        [2.0413816 , 1.7657268 , 0.98663735],
+        ...,
+        [1.1275897 , 1.3237666 , 1.3229973 ],
+        [1.3288093 , 1.5250571 , 1.6463088 ],
+        [1.4971416 , 1.7598536 , 1.9213845 ]],
+
+       [[1.9886132 , 1.759805  , 1.0330293 ],
+        [2.1167064 , 1.8557436 , 1.0928832 ],
+        [2.072359  , 1.7973957 , 1.0181656 ],
+        ...,
+        [1.0203743 , 1.2389673 , 1.1837943 ],
+        [1.2593551 , 1.4718376 , 1.5281637 ],
+        [1.4617971 , 1.7350913 , 1.8264583 ]],
+
+       [[2.129821  , 1.904165  , 1.1767476 ],
+        [2.2302113 , 1.9717822 , 1.2084062 ],
+        [2.1339014 , 1.8603119 , 1.0808021 ],
+        ...,
+        [0.9224423 , 1.1555355 , 1.0508968 ],
+        [1.1458501 , 1.4043263 , 1.4428153 ],
+        [1.3851284 , 1.6741631 , 1.7426349 ]]], dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="bowenroom/myBlog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/myBlog/pytorch/fastai/fusion/2021/12/03/JLDCF.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/myBlog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/myBlog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/myBlog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>learn DL easily</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/bowenroom" title="bowenroom"><svg class="svg-icon grey"><use xlink:href="/myBlog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/bowenroom1" title="bowenroom1"><svg class="svg-icon grey"><use xlink:href="/myBlog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

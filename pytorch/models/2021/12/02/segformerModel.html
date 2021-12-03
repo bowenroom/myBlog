@@ -95,7 +95,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -209,6 +209,178 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">SegformerModel</span><span class="p">,</span> <span class="n">SegformerConfig</span>
+
+<span class="c1"># Initializing a SegFormer nvidia/segformer-b0-finetuned-ade-512-512 style configuration</span>
+<span class="n">configuration</span> <span class="o">=</span> <span class="n">SegformerConfig</span><span class="p">()</span>
+
+<span class="c1"># Initializing a model from the nvidia/segformer-b0-finetuned-ade-512-512 style configuration</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SegformerModel</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+
+<span class="c1"># Accessing the model configuration</span>
+<span class="n">configuration</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ImportError</span>                               Traceback (most recent call last)
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">_get_module</span><span class="ansi-blue-fg">(self, module_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2231</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2232</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> importlib<span class="ansi-blue-fg">.</span>import_module<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"."</span> <span class="ansi-blue-fg">+</span> module_name<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>__name__<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2233</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/__init__.py</span> in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
+<span class="ansi-green-intense-fg ansi-bold">    126</span>             level <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-fg">--&gt; 127</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> _bootstrap<span class="ansi-blue-fg">.</span>_gcd_import<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">[</span>level<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> package<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    128</span> 
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_load_unlocked</span><span class="ansi-blue-fg">(spec)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap_external.py</span> in <span class="ansi-cyan-fg">exec_module</span><span class="ansi-blue-fg">(self, module)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/tokenization_utils.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-green-fg">from</span> <span class="ansi-blue-fg">.</span>file_utils <span class="ansi-green-fg">import</span> PaddingStrategy<span class="ansi-blue-fg">,</span> TensorType<span class="ansi-blue-fg">,</span> add_end_docstrings
+<span class="ansi-green-fg">---&gt; 27</span><span class="ansi-red-fg"> from .tokenization_utils_base import (
+</span><span class="ansi-green-intense-fg ansi-bold">     28</span>     ENCODE_KWARGS_DOCSTRING<span class="ansi-blue-fg">,</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/tokenization_utils_base.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     73</span> <span class="ansi-green-fg">if</span> is_tokenizers_available<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 74</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">from</span> tokenizers <span class="ansi-green-fg">import</span> AddedToken
+<span class="ansi-green-intense-fg ansi-bold">     75</span>     <span class="ansi-green-fg">from</span> tokenizers <span class="ansi-green-fg">import</span> Encoding <span class="ansi-green-fg">as</span> EncodingFast
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/site-packages/tokenizers/__init__.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     78</span> 
+<span class="ansi-green-fg">---&gt; 79</span><span class="ansi-red-fg"> from .tokenizers import (
+</span><span class="ansi-green-intense-fg ansi-bold">     80</span>     Tokenizer<span class="ansi-blue-fg">,</span>
+
+<span class="ansi-red-fg">ImportError</span>: /lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.29' not found (required by /home/ubuntu/miniconda3/envs/new/lib/python3.8/site-packages/tokenizers/tokenizers.cpython-38-x86_64-linux-gnu.so)
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">_get_module</span><span class="ansi-blue-fg">(self, module_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2231</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2232</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> importlib<span class="ansi-blue-fg">.</span>import_module<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"."</span> <span class="ansi-blue-fg">+</span> module_name<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>__name__<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2233</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/__init__.py</span> in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
+<span class="ansi-green-intense-fg ansi-bold">    126</span>             level <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-fg">--&gt; 127</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> _bootstrap<span class="ansi-blue-fg">.</span>_gcd_import<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">[</span>level<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> package<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    128</span> 
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_load_unlocked</span><span class="ansi-blue-fg">(spec)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap_external.py</span> in <span class="ansi-cyan-fg">exec_module</span><span class="ansi-blue-fg">(self, module)</span>
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/models/__init__.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     18</span> 
+<span class="ansi-green-fg">---&gt; 19</span><span class="ansi-red-fg"> from . import (
+</span><span class="ansi-green-intense-fg ansi-bold">     20</span>     albert<span class="ansi-blue-fg">,</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/models/layoutlm/__init__.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     21</span> <span class="ansi-green-fg">from</span> <span class="ansi-blue-fg">...</span>file_utils <span class="ansi-green-fg">import</span> _LazyModule<span class="ansi-blue-fg">,</span> is_tf_available<span class="ansi-blue-fg">,</span> is_tokenizers_available<span class="ansi-blue-fg">,</span> is_torch_available
+<span class="ansi-green-fg">---&gt; 22</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> <span class="ansi-blue-fg">.</span>configuration_layoutlm <span class="ansi-green-fg">import</span> LAYOUTLM_PRETRAINED_CONFIG_ARCHIVE_MAP<span class="ansi-blue-fg">,</span> LayoutLMConfig
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-green-fg">from</span> <span class="ansi-blue-fg">.</span>tokenization_layoutlm <span class="ansi-green-fg">import</span> LayoutLMTokenizer
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/models/layoutlm/configuration_layoutlm.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     18</span> 
+<span class="ansi-green-fg">---&gt; 19</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> transformers <span class="ansi-green-fg">import</span> PretrainedConfig<span class="ansi-blue-fg">,</span> PreTrainedTokenizer<span class="ansi-blue-fg">,</span> TensorType
+<span class="ansi-green-intense-fg ansi-bold">     20</span> 
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_handle_fromlist</span><span class="ansi-blue-fg">(module, fromlist, import_, recursive)</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">__getattr__</span><span class="ansi-blue-fg">(self, name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2221</span>         <span class="ansi-green-fg">elif</span> name <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>_class_to_module<span class="ansi-blue-fg">.</span>keys<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2222</span><span class="ansi-red-fg">             </span>module <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_module<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_class_to_module<span class="ansi-blue-fg">[</span>name<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2223</span>             value <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>module<span class="ansi-blue-fg">,</span> name<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">_get_module</span><span class="ansi-blue-fg">(self, module_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2233</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2234</span><span class="ansi-red-fg">             raise RuntimeError(
+</span><span class="ansi-green-intense-fg ansi-bold">   2235</span>                 <span class="ansi-blue-fg">f"Failed to import {self.__name__}.{module_name} because of the following error (look up to see its traceback):\n{e}"</span>
+
+<span class="ansi-red-fg">RuntimeError</span>: Failed to import transformers.tokenization_utils because of the following error (look up to see its traceback):
+/lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.29' not found (required by /home/ubuntu/miniconda3/envs/new/lib/python3.8/site-packages/tokenizers/tokenizers.cpython-38-x86_64-linux-gnu.so)
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_11069/1946589403.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> transformers <span class="ansi-green-fg">import</span> SegformerModel<span class="ansi-blue-fg">,</span> SegformerConfig
+<span class="ansi-green-intense-fg ansi-bold">      2</span> 
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-red-fg"># Initializing a SegFormer nvidia/segformer-b0-finetuned-ade-512-512 style configuration</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> configuration <span class="ansi-blue-fg">=</span> SegformerConfig<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> 
+
+<span class="ansi-green-fg">~/miniconda3/envs/new/lib/python3.8/importlib/_bootstrap.py</span> in <span class="ansi-cyan-fg">_handle_fromlist</span><span class="ansi-blue-fg">(module, fromlist, import_, recursive)</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">__getattr__</span><span class="ansi-blue-fg">(self, name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2220</span>             value <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_module<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2221</span>         <span class="ansi-green-fg">elif</span> name <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>_class_to_module<span class="ansi-blue-fg">.</span>keys<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2222</span><span class="ansi-red-fg">             </span>module <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_module<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_class_to_module<span class="ansi-blue-fg">[</span>name<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2223</span>             value <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>module<span class="ansi-blue-fg">,</span> name<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2224</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/sharedData/swp/dlLabSwp/blog/myBlog/codeIdeas/transformers/src/transformers/file_utils.py</span> in <span class="ansi-cyan-fg">_get_module</span><span class="ansi-blue-fg">(self, module_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2232</span>             <span class="ansi-green-fg">return</span> importlib<span class="ansi-blue-fg">.</span>import_module<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"."</span> <span class="ansi-blue-fg">+</span> module_name<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>__name__<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2233</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2234</span><span class="ansi-red-fg">             raise RuntimeError(
+</span><span class="ansi-green-intense-fg ansi-bold">   2235</span>                 <span class="ansi-blue-fg">f"Failed to import {self.__name__}.{module_name} because of the following error (look up to see its traceback):\n{e}"</span>
+<span class="ansi-green-intense-fg ansi-bold">   2236</span>             ) from e
+
+<span class="ansi-red-fg">RuntimeError</span>: Failed to import transformers.models.segformer because of the following error (look up to see its traceback):
+Failed to import transformers.tokenization_utils because of the following error (look up to see its traceback):
+/lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.29' not found (required by /home/ubuntu/miniconda3/envs/new/lib/python3.8/site-packages/tokenizers/tokenizers.cpython-38-x86_64-linux-gnu.so)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 
