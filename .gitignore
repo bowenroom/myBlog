@@ -17,4 +17,5 @@ _notebooks/iccv09Data/
 _notebooks/unfinished/
 _notebooks/work_dirs/
 codeIdeas/
+log/
 *.tar.gz
