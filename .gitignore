@@ -18,4 +18,5 @@ _notebooks/unfinished/
 _notebooks/work_dirs/
 codeIdeas/
 log/
+.vscode/
 *.tar.gz
